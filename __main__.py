@@ -36,21 +36,13 @@ class TemplateSimulatorSession():
     def get_state(self):
         """ Called to retreive the current state of the simulator. """
         return {
-            "cart_position": self.cartpole._cart_position,
-            "cart_velocity": self.cartpole._cart_velocity,
-            "pole_angle": self.cartpole._pole_angle,
-            "pole_angular_velocity": self.cartpole._pole_angular_velocity,
-            "pole_center_position": self.cartpole._pole_center_position,
-            "pole_center_velocity": self.cartpole._pole_center_velocity,
-            "target_pole_position": self.cartpole._target_pole_position,
+            "lion_population": self.cartpole._lion_population,
         }
     
     def episode_start(self, config: Dict[str, Any]):
         """ Called at the start of each episode """
         self.cartpole.reset(
-            config.get("initial_cart_position") or 0,
-            config.get("initial_pole_angle") or 0,
-            config.get("target_pole_position") or 0,
+            config.get("initial_lion_population") or 0,
         )
 
     def episode_step(self, action: Dict[str, Any]):
@@ -61,7 +53,7 @@ class TemplateSimulatorSession():
         """ Should return True if the simulator cannot continue"""
         # If the pole has fallen past 45 degrees, there's no use 
         # in continuing.
-        return abs(self.cartpole._pole_angle) >= math.pi / 4
+        return self.cartpole._lion_population == 0
 
 if __name__ == "__main__":
     # Grab standardized way to interact with sim API
