@@ -52,7 +52,7 @@ graph (input: SimState): SimAction {
 
             lesson BasicLesson {
                 scenario {
-                    initial_lion_population: 200
+                    initial_lion_population: number<10 .. 10000>
                 }
             }
         }
