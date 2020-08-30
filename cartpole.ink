@@ -14,12 +14,14 @@ const MaximumLionPopulation = 2000
 type SimState {
     # Population of lions
     lion_population: number,
+    lion_food: number,
+    gazelle_population: number,
 }
 
 # Type that represents the per-iteration action accepted by the simulator
 type SimAction {
     # Behavior of lions in the next time step
-    command: number<Rest = 0, Reproduce = 1>
+    command: number<Rest = 0, Reproduce = 1, Hunt = 2>
 }
 
 # Define a type that represents the per-episode configuration
@@ -27,6 +29,7 @@ type SimAction {
 type SimConfig {
     # Starting cart position in meters
     initial_lion_population: number<0 .. 100000>,
+    initial_gazelle_population: number<0 .. 100000>,
 }
 
 # Define a concept graph with a single concept
@@ -42,6 +45,8 @@ graph (input: SimState): SimAction {
             goal (State: SimState) {
                 drive LionPopulation:
                     State.lion_population in Goal.Range(MinimumLionPopulation, MaximumLionPopulation)
+                avoid LionExtinction:
+                    State.lion_population in Goal.RangeBelow(0)
             }
 
             training {
@@ -52,7 +57,8 @@ graph (input: SimState): SimAction {
 
             lesson BasicLesson {
                 scenario {
-                    initial_lion_population: number<10 .. 10000>
+                    initial_lion_population: number<10 .. 10000>,
+                    initial_gazelle_population: number<10 .. 10000>
                 }
             }
         }

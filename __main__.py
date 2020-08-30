@@ -37,12 +37,15 @@ class TemplateSimulatorSession():
         """ Called to retreive the current state of the simulator. """
         return {
             "lion_population": self.cartpole._lion_population,
+            "lion_food": self.cartpole._lion_food,
+            "gazelle_population": self.cartpole._gazelle_population
         }
     
     def episode_start(self, config: Dict[str, Any]):
         """ Called at the start of each episode """
         self.cartpole.reset(
             config.get("initial_lion_population") or 0,
+            config.get("initial_gazelle_population") or 0
         )
 
     def episode_step(self, action: Dict[str, Any]):
@@ -51,8 +54,7 @@ class TemplateSimulatorSession():
 
     def halted(self) -> bool:
         """ Should return True if the simulator cannot continue"""
-        # If the pole has fallen past 45 degrees, there's no use 
-        # in continuing.
+        # If there are no lions, there's no use in continuing.
         return self.cartpole._lion_population == 0
 
 if __name__ == "__main__":

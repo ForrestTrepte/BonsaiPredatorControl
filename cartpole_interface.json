@@ -1,5 +1,5 @@
 {
-  "name": "preditor-control-v1",
+  "name": "preditor-control-v2",
   "timeout": 60,
   "description": {
     "config": {
@@ -11,6 +11,14 @@
             "category": "Number",
             "defaultValue": 100,
             "comment": "Starting population of lions"
+          }
+        },
+        {
+          "name": "initial_gazelle_population",
+          "type": {
+            "category": "Number",
+            "defaultValue": 100,
+            "comment": "Starting population of gazelles"
           }
         }
       ]
@@ -36,6 +44,20 @@
           "type": {
             "category": "Number",
             "comment": "Population of lions"
+          }
+        },
+        {
+          "name": "lion_food",
+          "type": {
+            "category": "Number",
+            "comment": "Food (quantity of killed gazelles)"
+          }
+        },
+        {
+          "name": "gazelle_population",
+          "type": {
+            "category": "Number",
+            "comment": "Population of gazelles"
           }
         }
       ]
