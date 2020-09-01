@@ -14,7 +14,7 @@ import random
 LION_REPRODUCE_BIRTH_RATE = 0.25
 LION_DEATH_RATE = 0.1
 LION_HUNT_RATE = 0.5 # number of gazelles killed per lion hunting
-LION_FOOD_CONSUMATION = 0.1 # number of gazelles eaten per lion
+LION_FOOD_CONSUMPTION = 0.1 # number of gazelles eaten per lion
 MAXIMUM_LION_POPULATION = 10000
 GAZELLE_NET_REPRODUCE_RATE = 0.10
 MAXIMUM_GAZELLE_POPULATION = 10000
@@ -31,8 +31,7 @@ class CartPoleModel():
         # cart position (m)
         self._lion_population = initial_lion_population
         self._gazelle_population = initial_gazelle_population
-        self._lion_food = self._lion_population * LION_FOOD_CONSUMATION # enough food for first step
-        print(f'reset: lion_population {self._lion_population}, gazelle_population {self._gazelle_population}')
+        self._lion_food = self._lion_population * LION_FOOD_CONSUMPTION # enough food for first step
 
     def step(self, command: float):
         # 1 for reproduce
@@ -49,8 +48,8 @@ class CartPoleModel():
             self._gazelle_population -= kills
         
         self._lion_population -= math.floor(self._lion_population * LION_DEATH_RATE)
-        self._lion_population = math.floor(min(self._lion_population, self._lion_food / LION_FOOD_CONSUMATION))
-        self._lion_food -= self._lion_population * LION_FOOD_CONSUMATION
+        self._lion_population = math.floor(min(self._lion_population, self._lion_food / LION_FOOD_CONSUMPTION))
+        self._lion_food -= self._lion_population * LION_FOOD_CONSUMPTION
         self._lion_population = min(self._lion_population, MAXIMUM_LION_POPULATION)
 
         self._gazelle_population += math.floor(self._gazelle_population * GAZELLE_NET_REPRODUCE_RATE)
