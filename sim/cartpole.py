@@ -10,18 +10,19 @@ __copyright__ = "Copyright 2020, Microsoft Corp."
 import math
 import random
 
-# Constants
-LION_REPRODUCE_BIRTH_RATE = 0.25
-LION_DEATH_RATE = 0.1
-LION_HUNT_RATE = 0.5 # number of gazelles killed per lion hunting
-LION_FOOD_CONSUMPTION = 0.1 # number of gazelles eaten per lion
-MAXIMUM_LION_POPULATION = 10000
-GAZELLE_NET_REPRODUCE_RATE = 0.10
-MAXIMUM_GAZELLE_POPULATION = 10000
+class EcosystemConfiguration():
+    LION_REPRODUCE_BIRTH_RATE: float = 0.25
+    LION_DEATH_RATE: float = 0.1
+    LION_HUNT_RATE: float = 0.5 # number of gazelles killed per lion hunting
+    LION_FOOD_CONSUMPTION: float = 0.1 # number of gazelles eaten per lion
+    MAXIMUM_LION_POPULATION: float = 10000
+    GAZELLE_NET_REPRODUCE_RATE: float = 0.1
+    MAXIMUM_GAZELLE_POPULATION: float = 10000
 
 # Model parameters
 class CartPoleModel():
-    def __init__(self):
+    def __init__(self, ecosystem_configuration: EcosystemConfiguration = EcosystemConfiguration()):
+        self.ecosystem_configuration = ecosystem_configuration
         self.reset()
 
     def reset(self,
@@ -31,7 +32,7 @@ class CartPoleModel():
         # cart position (m)
         self._lion_population = initial_lion_population
         self._gazelle_population = initial_gazelle_population
-        self._lion_food = self._lion_population * LION_FOOD_CONSUMPTION # enough food for first step
+        self._lion_food = self._lion_population * self.ecosystem_configuration.LION_FOOD_CONSUMPTION # enough food for first step
 
     def step(self, command: float):
         # 1 for reproduce
@@ -41,16 +42,17 @@ class CartPoleModel():
         # TODO: Apply probabilities to reproduction, hunting, death, etc. instead of just multiplying and rounding.
 
         if command == 1:
-            self._lion_population += math.floor(self._lion_population * LION_REPRODUCE_BIRTH_RATE)
+            self._lion_population += math.floor(self._lion_population * self.ecosystem_configuration.LION_REPRODUCE_BIRTH_RATE)
         elif command == 2:
-            kills = math.floor(min(self._lion_population * LION_HUNT_RATE, self._gazelle_population))
+            kills = math.floor(min(self._lion_population * self.ecosystem_configuration.LION_HUNT_RATE, self._gazelle_population))
             self._lion_food += kills
             self._gazelle_population -= kills
         
-        self._lion_population -= math.floor(self._lion_population * LION_DEATH_RATE)
-        self._lion_population = math.floor(min(self._lion_population, self._lion_food / LION_FOOD_CONSUMPTION))
-        self._lion_food -= self._lion_population * LION_FOOD_CONSUMPTION
-        self._lion_population = min(self._lion_population, MAXIMUM_LION_POPULATION)
+        self._lion_population -= math.floor(self._lion_population * self.ecosystem_configuration.LION_DEATH_RATE)
+        if self.ecosystem_configuration.LION_FOOD_CONSUMPTION > 0:
+            self._lion_population = math.floor(min(self._lion_population, self._lion_food / self.ecosystem_configuration.LION_FOOD_CONSUMPTION))
+        self._lion_food -= self._lion_population * self.ecosystem_configuration.LION_FOOD_CONSUMPTION
+        self._lion_population = min(self._lion_population, self.ecosystem_configuration.MAXIMUM_LION_POPULATION)
 
-        self._gazelle_population += math.floor(self._gazelle_population * GAZELLE_NET_REPRODUCE_RATE)
-        self._gazelle_population = min(self._gazelle_population, MAXIMUM_GAZELLE_POPULATION)
+        self._gazelle_population += math.floor(self._gazelle_population * self.ecosystem_configuration.GAZELLE_NET_REPRODUCE_RATE)
+        self._gazelle_population = min(self._gazelle_population, self.ecosystem_configuration.MAXIMUM_GAZELLE_POPULATION)
