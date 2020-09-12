@@ -26,7 +26,7 @@ from microsoft_bonsai_api.simulator.generated.models import (
     SimulatorState,
     SimulatorInterface,
 )
-from sim.cartpole import CartPoleModel
+from sim.ecosystem import CartPoleModel
 import math
 
 class TemplateSimulatorSession():
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     client = BonsaiClient(config_client)
 
     # Load json file as simulator integration config type file
-    with open('cartpole_interface.json') as file:
+    with open('predator_control_interface.json') as file:
         interface = json.load(file)
 
     # Create simulator session and init sequence id
