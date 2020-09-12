@@ -26,42 +26,36 @@ from microsoft_bonsai_api.simulator.generated.models import (
     SimulatorState,
     SimulatorInterface,
 )
-from sim.cartpole import CartPoleModel
+import sim.ecosystem
 import math
 
 class TemplateSimulatorSession():
     def __init__(self):
-        self.cartpole = CartPoleModel()
+        self.ecosystem = sim.ecosystem.EcosystemModel()
     
     def get_state(self):
         """ Called to retreive the current state of the simulator. """
         return {
-            "cart_position": self.cartpole._cart_position,
-            "cart_velocity": self.cartpole._cart_velocity,
-            "pole_angle": self.cartpole._pole_angle,
-            "pole_angular_velocity": self.cartpole._pole_angular_velocity,
-            "pole_center_position": self.cartpole._pole_center_position,
-            "pole_center_velocity": self.cartpole._pole_center_velocity,
-            "target_pole_position": self.cartpole._target_pole_position,
+            "lion_population": self.ecosystem._lion_population,
+            "lion_food": self.ecosystem._lion_food,
+            "gazelle_population": self.ecosystem._gazelle_population
         }
     
     def episode_start(self, config: Dict[str, Any]):
         """ Called at the start of each episode """
-        self.cartpole.reset(
-            config.get("initial_cart_position") or 0,
-            config.get("initial_pole_angle") or 0,
-            config.get("target_pole_position") or 0,
+        self.ecosystem.reset(
+            config.get("initial_lion_population") or 0,
+            config.get("initial_gazelle_population") or 0
         )
 
     def episode_step(self, action: Dict[str, Any]):
         """ Called for each step of the episode """
-        self.cartpole.step(action.get("command") or 0)
+        self.ecosystem.step(action.get("command") or 0)
 
     def halted(self) -> bool:
         """ Should return True if the simulator cannot continue"""
-        # If the pole has fallen past 45 degrees, there's no use 
-        # in continuing.
-        return abs(self.cartpole._pole_angle) >= math.pi / 4
+        # If there are no lions, there's no use in continuing.
+        return self.ecosystem._lion_population == 0
 
 if __name__ == "__main__":
     # Grab standardized way to interact with sim API
@@ -72,7 +66,7 @@ if __name__ == "__main__":
     client = BonsaiClient(config_client)
 
     # Load json file as simulator integration config type file
-    with open('cartpole_interface.json') as file:
+    with open('predator_control_interface.json') as file:
         interface = json.load(file)
 
     # Create simulator session and init sequence id
