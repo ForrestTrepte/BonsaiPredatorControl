@@ -2,13 +2,13 @@ import ecosystem
 
 def get_test_ecosystem_configuration() -> ecosystem.EcosystemConfiguration:
     config = ecosystem.EcosystemConfiguration()
-    config.LION_REPRODUCE_BIRTH_RATE = 0
-    config.LION_DEATH_RATE = 0
-    config.LION_HUNT_RATE = 0
-    config.LION_FOOD_CONSUMPTION = 0
-    config.MAXIMUM_LION_POPULATION = 1000000
-    config.GAZELLE_NET_REPRODUCE_RATE = 0
-    config.MAXIMUM_GAZELLE_POPULATION = 1000000
+    config.lion_reproduce_birth_rate = 0
+    config.lion_death_rate = 0
+    config.lion_hunt_rate = 0
+    config.lion_food_consumption = 0
+    config.maximum_lion_population = 1000000
+    config.gazelle_net_reproduce_rate = 0
+    config.maximum_gazelle_population = 1000000
     return config
 
 def test_init_sim():
@@ -24,10 +24,10 @@ def test_init_sim():
 
 def test_reproduce():
     test_ecosystem_configuration = get_test_ecosystem_configuration()
-    test_ecosystem_configuration.LION_REPRODUCE_BIRTH_RATE = 0.1
-    test_ecosystem_configuration.MAXIMUM_LION_POPULATION = 111
-    test_ecosystem_configuration.GAZELLE_NET_REPRODUCE_RATE = 0.2
-    test_ecosystem_configuration.MAXIMUM_GAZELLE_POPULATION = 1441
+    test_ecosystem_configuration.lion_reproduce_birth_rate = 0.1
+    test_ecosystem_configuration.maximum_lion_population = 111
+    test_ecosystem_configuration.gazelle_net_reproduce_rate = 0.2
+    test_ecosystem_configuration.maximum_gazelle_population = 1441
     model = ecosystem.EcosystemModel(test_ecosystem_configuration)
     model.reset(100, 1000)
     assert model._lion_population == 100
@@ -50,7 +50,7 @@ def test_reproduce():
 
 def test_lion_death():
     test_ecosystem_configuration = get_test_ecosystem_configuration()
-    test_ecosystem_configuration.LION_DEATH_RATE = 0.1
+    test_ecosystem_configuration.lion_death_rate = 0.1
     model = ecosystem.EcosystemModel(test_ecosystem_configuration)
     model.reset(100, 0)
     assert model._lion_population == 100
@@ -59,7 +59,7 @@ def test_lion_death():
 
 def test_lion_food():
     test_ecosystem_configuration = get_test_ecosystem_configuration()
-    test_ecosystem_configuration.LION_FOOD_CONSUMPTION = 0.1
+    test_ecosystem_configuration.lion_food_consumption = 0.1
     model = ecosystem.EcosystemModel(test_ecosystem_configuration)
     model.reset(100, 0)
     assert model._lion_food == 10
@@ -73,7 +73,7 @@ def test_lion_food():
 
 def test_hunt():
     test_ecosystem_configuration = get_test_ecosystem_configuration()
-    test_ecosystem_configuration.LION_HUNT_RATE = 0.1
+    test_ecosystem_configuration.lion_hunt_rate = 0.1
     model = ecosystem.EcosystemModel(test_ecosystem_configuration)
     model.reset(100, 1000)
     assert model._lion_food == 0
