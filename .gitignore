@@ -1,5 +1,7 @@
-# Visual Studio 2015/2017 cache/options directory
+# Visual Studio cache/options directory
 .vs/
+# Visual Studio TestResults directory
+TestResults/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
