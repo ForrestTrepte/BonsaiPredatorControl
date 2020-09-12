@@ -13,7 +13,7 @@ def get_test_ecosystem_configuration() -> ecosystem.EcosystemConfiguration:
 
 def test_init_sim():
     test_ecosystem_configuration = get_test_ecosystem_configuration()
-    model = ecosystem.CartPoleModel(test_ecosystem_configuration)
+    model = ecosystem.EcosystemModel(test_ecosystem_configuration)
     assert model.ecosystem_configuration == test_ecosystem_configuration
     assert model._lion_population == 0
     assert model._lion_food == 0
@@ -28,7 +28,7 @@ def test_reproduce():
     test_ecosystem_configuration.MAXIMUM_LION_POPULATION = 111
     test_ecosystem_configuration.GAZELLE_NET_REPRODUCE_RATE = 0.2
     test_ecosystem_configuration.MAXIMUM_GAZELLE_POPULATION = 1441
-    model = ecosystem.CartPoleModel(test_ecosystem_configuration)
+    model = ecosystem.EcosystemModel(test_ecosystem_configuration)
     model.reset(100, 1000)
     assert model._lion_population == 100
     assert model._gazelle_population == 1000
@@ -51,7 +51,7 @@ def test_reproduce():
 def test_lion_death():
     test_ecosystem_configuration = get_test_ecosystem_configuration()
     test_ecosystem_configuration.LION_DEATH_RATE = 0.1
-    model = ecosystem.CartPoleModel(test_ecosystem_configuration)
+    model = ecosystem.EcosystemModel(test_ecosystem_configuration)
     model.reset(100, 0)
     assert model._lion_population == 100
     model.step(ecosystem.EcosystemAction.Rest)
@@ -60,7 +60,7 @@ def test_lion_death():
 def test_lion_food():
     test_ecosystem_configuration = get_test_ecosystem_configuration()
     test_ecosystem_configuration.LION_FOOD_CONSUMPTION = 0.1
-    model = ecosystem.CartPoleModel(test_ecosystem_configuration)
+    model = ecosystem.EcosystemModel(test_ecosystem_configuration)
     model.reset(100, 0)
     assert model._lion_food == 10
     assert model._lion_population == 100
@@ -74,7 +74,7 @@ def test_lion_food():
 def test_hunt():
     test_ecosystem_configuration = get_test_ecosystem_configuration()
     test_ecosystem_configuration.LION_HUNT_RATE = 0.1
-    model = ecosystem.CartPoleModel(test_ecosystem_configuration)
+    model = ecosystem.EcosystemModel(test_ecosystem_configuration)
     model.reset(100, 1000)
     assert model._lion_food == 0
     assert model._lion_population == 100

@@ -1,6 +1,3 @@
-# This sample demonstrates how to teach a policy for controlling
-# a cartpole (inverted pendulum) device.
-
 inkling "2.0"
 
 using Math

@@ -26,7 +26,7 @@ class EcosystemAction(enum.IntEnum):
     Hunt = 2
 
 # Model parameters
-class CartPoleModel():
+class EcosystemModel():
     def __init__(self, ecosystem_configuration: EcosystemConfiguration = EcosystemConfiguration()):
         self.ecosystem_configuration = ecosystem_configuration
         self.reset()

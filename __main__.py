@@ -26,36 +26,36 @@ from microsoft_bonsai_api.simulator.generated.models import (
     SimulatorState,
     SimulatorInterface,
 )
-from sim.ecosystem import CartPoleModel
+from sim.ecosystem import EcosystemModel
 import math
 
 class TemplateSimulatorSession():
     def __init__(self):
-        self.cartpole = CartPoleModel()
+        self.ecosystem = EcosystemModel()
     
     def get_state(self):
         """ Called to retreive the current state of the simulator. """
         return {
-            "lion_population": self.cartpole._lion_population,
-            "lion_food": self.cartpole._lion_food,
-            "gazelle_population": self.cartpole._gazelle_population
+            "lion_population": self.ecosystem._lion_population,
+            "lion_food": self.ecosystem._lion_food,
+            "gazelle_population": self.ecosystem._gazelle_population
         }
     
     def episode_start(self, config: Dict[str, Any]):
         """ Called at the start of each episode """
-        self.cartpole.reset(
+        self.ecosystem.reset(
             config.get("initial_lion_population") or 0,
             config.get("initial_gazelle_population") or 0
         )
 
     def episode_step(self, action: Dict[str, Any]):
         """ Called for each step of the episode """
-        self.cartpole.step(action.get("command") or 0)
+        self.ecosystem.step(action.get("command") or 0)
 
     def halted(self) -> bool:
         """ Should return True if the simulator cannot continue"""
         # If there are no lions, there's no use in continuing.
-        return self.cartpole._lion_population == 0
+        return self.ecosystem._lion_population == 0
 
 if __name__ == "__main__":
     # Grab standardized way to interact with sim API
