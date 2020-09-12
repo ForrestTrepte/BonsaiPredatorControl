@@ -34,17 +34,17 @@ def test_reproduce():
     assert model._gazelle_population == 1000
 
     # reproduce without lion reproduction
-    model.step(3)
+    model.step(cartpole.EcosystemAction.Rest)
     assert model._lion_population == 100
     assert model._gazelle_population == 1200
 
     # reproduce with lion reproduction
-    model.step(1)
+    model.step(cartpole.EcosystemAction.Reproduce)
     assert model._lion_population == 110
     assert model._gazelle_population == 1440
 
     # reproduce capped by maximum population
-    model.step(1)
+    model.step(cartpole.EcosystemAction.Reproduce)
     assert model._lion_population == 111
     assert model._gazelle_population == 1441
 
@@ -54,7 +54,7 @@ def test_lion_death():
     model = cartpole.CartPoleModel(test_ecosystem_configuration)
     model.reset(100, 0)
     assert model._lion_population == 100
-    model.step(3)
+    model.step(cartpole.EcosystemAction.Rest)
     assert model._lion_population == 90
 
 def test_lion_food():
@@ -64,10 +64,10 @@ def test_lion_food():
     model.reset(100, 0)
     assert model._lion_food == 10
     assert model._lion_population == 100
-    model.step(3)
+    model.step(cartpole.EcosystemAction.Rest)
     assert model._lion_food == 0
     assert model._lion_population == 100
-    model.step(3)
+    model.step(cartpole.EcosystemAction.Rest)
     assert model._lion_food == 0
     assert model._lion_population == 0
 
@@ -81,13 +81,13 @@ def test_hunt():
     assert model._gazelle_population == 1000
 
     # step without lion hunting
-    model.step(3)
+    model.step(cartpole.EcosystemAction.Rest)
     assert model._lion_food == 0
     assert model._lion_population == 100
     assert model._gazelle_population == 1000
 
     # step with lion hunting
-    model.step(2)
+    model.step(cartpole.EcosystemAction.Hunt)
     assert model._lion_food == 10
     assert model._lion_population == 100
     assert model._gazelle_population == 990

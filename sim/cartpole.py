@@ -9,6 +9,7 @@ __copyright__ = "Copyright 2020, Microsoft Corp."
 
 import math
 import random
+import enum
 
 class EcosystemConfiguration():
     LION_REPRODUCE_BIRTH_RATE: float = 0.25
@@ -18,6 +19,11 @@ class EcosystemConfiguration():
     MAXIMUM_LION_POPULATION: float = 10000
     GAZELLE_NET_REPRODUCE_RATE: float = 0.1
     MAXIMUM_GAZELLE_POPULATION: float = 10000
+
+class EcosystemAction(enum.IntEnum):
+    Rest = 0
+    Reproduce = 1
+    Hunt = 2
 
 # Model parameters
 class CartPoleModel():
@@ -35,15 +41,11 @@ class CartPoleModel():
         self._lion_food = self._lion_population * self.ecosystem_configuration.LION_FOOD_CONSUMPTION # enough food for first step
 
     def step(self, command: float):
-        # 1 for reproduce
-        # 2 for hunt
-        # otherwise rest
-
         # TODO: Apply probabilities to reproduction, hunting, death, etc. instead of just multiplying and rounding.
 
-        if command == 1:
+        if command == EcosystemAction.Reproduce:
             self._lion_population += math.floor(self._lion_population * self.ecosystem_configuration.LION_REPRODUCE_BIRTH_RATE)
-        elif command == 2:
+        elif command == EcosystemAction.Hunt:
             kills = math.floor(min(self._lion_population * self.ecosystem_configuration.LION_HUNT_RATE, self._gazelle_population))
             self._lion_food += kills
             self._gazelle_population -= kills
