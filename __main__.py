@@ -26,12 +26,12 @@ from microsoft_bonsai_api.simulator.generated.models import (
     SimulatorState,
     SimulatorInterface,
 )
-from sim.ecosystem import EcosystemModel
+import sim.ecosystem
 import math
 
 class TemplateSimulatorSession():
     def __init__(self):
-        self.ecosystem = EcosystemModel()
+        self.ecosystem = sim.ecosystem.EcosystemModel()
     
     def get_state(self):
         """ Called to retreive the current state of the simulator. """
