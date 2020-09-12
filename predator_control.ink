@@ -24,7 +24,6 @@ type SimAction {
 # Define a type that represents the per-episode configuration
 # settings supported by the simulator.
 type SimConfig {
-    # Starting cart position in meters
     initial_lion_population: number<0 .. 100000>,
     initial_gazelle_population: number<0 .. 100000>,
 }

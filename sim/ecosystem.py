@@ -1,10 +1,3 @@
-"""
-Classic cart-pole system implemented by Rich Sutton et al.
-Derived from http://incompleteideas.net/sutton/book/code/pole.c
-permalink: https://perma.cc/C9ZM-652R
-"""
-__copyright__ = "Copyright 2020, Microsoft Corp."
-
 # pyright: strict
 
 import math
@@ -35,7 +28,6 @@ class EcosystemModel():
              initial_lion_population: float = 0,
              initial_gazelle_population: float = 0
         ):
-        # cart position (m)
         self._lion_population = initial_lion_population
         self._gazelle_population = initial_gazelle_population
         self._lion_food = self._lion_population * self.ecosystem_configuration.LION_FOOD_CONSUMPTION # enough food for first step
