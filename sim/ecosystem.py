@@ -9,6 +9,7 @@ class EcosystemConfiguration():
     lion_death_rate: float = 0.1
     lion_hunt_rate: float = 0.5 # number of gazelles killed per lion hunting
     lion_food_consumption: float = 0.1 # number of gazelles eaten per lion
+    maximum_lion_food: float = 10000
     maximum_lion_population: float = 10000
     gazelle_net_reproduce_rate: float = 0.1
     maximum_gazelle_population: float = 10000
@@ -47,6 +48,9 @@ class EcosystemModel():
         if self.ecosystem_configuration.lion_food_consumption > 0:
             self._lion_population = math.floor(min(self._lion_population, self._lion_food / self.ecosystem_configuration.lion_food_consumption))
         self._lion_food -= self._lion_population * self.ecosystem_configuration.lion_food_consumption
+        self._lion_food = min(self._lion_food, self.ecosystem_configuration.maximum_lion_food)
+
+        # Maximum Population
         self._lion_population = min(self._lion_population, self.ecosystem_configuration.maximum_lion_population)
 
         # Gazelles

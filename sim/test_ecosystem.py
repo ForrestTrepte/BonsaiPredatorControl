@@ -74,6 +74,7 @@ def test_lion_food():
 def test_hunt():
     test_ecosystem_configuration = get_test_ecosystem_configuration()
     test_ecosystem_configuration.lion_hunt_rate = 0.1
+    test_ecosystem_configuration.maximum_lion_food = 9
     model = ecosystem.EcosystemModel(test_ecosystem_configuration)
     model.reset(100, 1000)
     assert model._lion_food == 0
@@ -91,3 +92,9 @@ def test_hunt():
     assert model._lion_food == 8
     assert model._lion_population == 100
     assert model._gazelle_population == 992
+
+    # excess of maximum food is lost
+    model.step(0.0, 0.8)
+    assert model._lion_food == 9
+    assert model._lion_population == 100
+    assert model._gazelle_population == 984
