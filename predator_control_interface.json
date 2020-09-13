@@ -1,5 +1,5 @@
 {
-  "name": "preditor-control-v2",
+  "name": "preditor-control-v3",
   "timeout": 60,
   "description": {
     "config": {
@@ -27,7 +27,15 @@
       "category": "Struct",
       "fields": [
         {
-          "name": "command",
+          "name": "reproduction",
+          "type": {
+            "category": "Number",
+            "start": 0,
+            "stop": 1
+          }
+        },
+        {
+          "name": "hunting",
           "type": {
             "category": "Number",
             "start": 0,

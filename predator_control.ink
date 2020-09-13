@@ -18,7 +18,8 @@ type SimState {
 # Type that represents the per-iteration action accepted by the simulator
 type SimAction {
     # Behavior of lions in the next time step
-    command: number<Rest = 0, Reproduce = 1, Hunt = 2>
+    reproduction: number<0 .. 1>,
+    hunting: number<0 .. 1>
 }
 
 # Define a type that represents the per-episode configuration

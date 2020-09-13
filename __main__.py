@@ -50,7 +50,7 @@ class TemplateSimulatorSession():
 
     def episode_step(self, action: Dict[str, Any]):
         """ Called for each step of the episode """
-        self.ecosystem.step(action.get("command") or 0)
+        self.ecosystem.step(action.get("reproduction") or 0, action.get("hunting") or 0)
 
     def halted(self) -> bool:
         """ Should return True if the simulator cannot continue"""
@@ -73,12 +73,10 @@ if __name__ == "__main__":
     registration_info = SimulatorInterface(
                             name=interface['name'], 
                             timeout=interface['timeout'], 
-                            simulator_context=config_client.simulator_context, 
-    )
+                            simulator_context=config_client.simulator_context)
     registered_session = client.session.create(
                             workspace_name=config_client.workspace, 
-                            body=registration_info
-    )
+                            body=registration_info)
     print("Registered simulator.")
     sequence_id = 1
 
