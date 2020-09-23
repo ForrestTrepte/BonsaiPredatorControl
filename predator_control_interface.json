@@ -1,5 +1,5 @@
 {
-  "name": "preditor-control-v3",
+  "name": "preditor-control-v4",
   "timeout": 60,
   "description": {
     "config": {
@@ -19,6 +19,14 @@
             "category": "Number",
             "defaultValue": 100,
             "comment": "Starting population of gazelles"
+          }
+        },
+        {
+          "name": "initial_grass_population",
+          "type": {
+            "category": "Number",
+            "defaultValue": 100,
+            "comment": "Starting population of grass"
           }
         }
       ]
@@ -66,6 +74,13 @@
           "type": {
             "category": "Number",
             "comment": "Population of gazelles"
+          }
+        },
+        {
+          "name": "grass_population",
+          "type": {
+            "category": "Number",
+            "comment": "Population of grass"
           }
         }
       ]
