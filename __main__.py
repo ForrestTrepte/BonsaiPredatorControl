@@ -38,14 +38,16 @@ class TemplateSimulatorSession():
         return {
             "lion_population": self.ecosystem._lion_population,
             "lion_food": self.ecosystem._lion_food,
-            "gazelle_population": self.ecosystem._gazelle_population
+            "gazelle_population": self.ecosystem._gazelle_population,
+            "grass_population": self.ecosystem._grass_population
         }
     
     def episode_start(self, config: Dict[str, Any]):
         """ Called at the start of each episode """
         self.ecosystem.reset(
             config.get("initial_lion_population") or 0,
-            config.get("initial_gazelle_population") or 0
+            config.get("initial_gazelle_population") or 0,
+            config.get("initial_grass_population") or 0
         )
 
     def episode_step(self, action: Dict[str, Any]):

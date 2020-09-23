@@ -13,6 +13,7 @@ type SimState {
     lion_population: number,
     lion_food: number,
     gazelle_population: number,
+    grass_population: number
 }
 
 # Type that represents the per-iteration action accepted by the simulator
@@ -27,6 +28,7 @@ type SimAction {
 type SimConfig {
     initial_lion_population: number<0 .. 100000>,
     initial_gazelle_population: number<0 .. 100000>,
+    initial_grass_population: number<0 .. 100000>
 }
 
 # Define a concept graph with a single concept
@@ -47,15 +49,14 @@ graph (input: SimState): SimAction {
             }
 
             training {
-                # Limit the number of iterations per episode to 120. The default
-                # is 1000, which makes it much tougher to succeed.
-                EpisodeIterationLimit: 120
+                EpisodeIterationLimit: 1000
             }
 
             lesson BasicLesson {
                 scenario {
                     initial_lion_population: number<10 .. 10000>,
-                    initial_gazelle_population: number<10 .. 10000>
+                    initial_gazelle_population: number<10 .. 10000>,
+                    initial_grass_population: number<10 .. 10000>
                 }
             }
         }
